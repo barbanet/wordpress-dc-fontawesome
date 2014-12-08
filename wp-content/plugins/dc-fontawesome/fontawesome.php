@@ -2,7 +2,7 @@
 /*
 Plugin Name: DC FontAwesome
 Description: Integrate FontAwesome to Wordpress to be used with any theme in a non-intrusive way.
-Version: 0.1.0
+Version: 0.2.0
 Author: Damián Culotta
 Author URI: http://www.damianculotta.com.ar
 License: GPL3
@@ -21,6 +21,7 @@ function getFontAwesomeStyles()
     }
 }
 add_action('wp_enqueue_scripts', 'getFontAwesomeStyles');
+add_action('admin_head', 'getFontAwesomeStyles');
 
 function getFontawesomeAdmin()
 {
@@ -36,7 +37,7 @@ function getFontawesomeAdmin()
         <h2><?php _e('DC Font Awesome'); ?></h2>
         <p><?php _e('It allows to include the <a href="http://fontawesome.io/" target="_blank">FontAwesome</a> library in a non-intrusive way.'); ?></p>
         <h3><?php _e('Library Source'); ?></h3>
-        <form method="post" action="<?php echo admin_url('options-general.php?page=fontawesome'); ?>">
+        <form method="post" action="<?php echo admin_url("options-general.php?page=fontawesome"); ?>">
             <table class="form-table">
                 <tr>
                     <td>
@@ -70,7 +71,6 @@ function getFontawesomeAdminMenu()
 {
     add_options_page('Font Awesome', 'Font Awesome', 8, 'fontawesome', 'getFontawesomeAdmin');
 }
-
 add_action('admin_menu', 'getFontawesomeAdminMenu'); 
 
 ?>
