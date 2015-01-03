@@ -2,28 +2,29 @@
 /*
 Plugin Name: DC FontAwesome
 Description: Integrate FontAwesome to Wordpress to be used with any theme in a non-intrusive way.
-Version: 0.2.0
+Version: 0.3.0
 Author: Damián Culotta
 Author URI: http://www.damianculotta.com.ar
 License: GPL3
 */
 
-function getFontAwesomeStyles()
+function getDcFontAwesomeStyles()
 {
     $_settings_mode = get_option('fontawesome_mode', 'disable');
     switch($_settings_mode) {
         case 'local':
-            wp_enqueue_style('font-awesome', plugin_dir_url(__FILE__) . 'css/font-awesome.min.css');
+            wp_enqueue_style('font-awesome', plugin_dir_url(__FILE__) . 'css/font-awesome.min.css', false, getDcFontawesomeVersion());
             break;
         case 'remote':
-            wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
+            wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', false, getDcFontawesomeVersion());
             break;
     }
 }
-add_action('wp_enqueue_scripts', 'getFontAwesomeStyles');
-add_action('admin_head', 'getFontAwesomeStyles');
 
-function getFontawesomeAdmin()
+add_action('wp_enqueue_scripts', 'getDcFontAwesomeStyles');
+add_action('admin_head', 'getDcFontAwesomeStyles');
+
+function getDcFontawesomeAdmin()
 {
     if ($_POST['fontawesome_mode']) {
         update_option('fontawesome_mode', $_POST['fontawesome_mode']);
@@ -67,10 +68,21 @@ function getFontawesomeAdmin()
     <?php
 }
 
-function getFontawesomeAdminMenu()
+function getDcFontawesomeAdminMenu()
 {
-    add_options_page('Font Awesome', 'Font Awesome', 8, 'fontawesome', 'getFontawesomeAdmin');
+    add_options_page('Font Awesome', 'Font Awesome', 8, 'fontawesome', 'getDcFontawesomeAdmin');
 }
-add_action('admin_menu', 'getFontawesomeAdminMenu'); 
+
+add_action('admin_menu', 'getDcFontawesomeAdminMenu');
+
+function getDcFontawesomeVersion()
+{
+    if (!function_exists('get_plugins')) {
+        require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+    }
+    $plugin_folder = get_plugins('/' . plugin_basename(dirname(__FILE__)));
+    $plugin_file = basename((__FILE__));
+    return $plugin_folder[$plugin_file]['Version'];
+}
 
 ?>
