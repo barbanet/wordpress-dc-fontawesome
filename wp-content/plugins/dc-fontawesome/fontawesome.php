@@ -2,7 +2,7 @@
 /*
 Plugin Name: DC FontAwesome
 Description: Integrate FontAwesome to Wordpress to be used with any theme in a non-intrusive way.
-Version: 0.3.0
+Version: 0.4.0
 Author: Damián Culotta
 Author URI: http://www.damianculotta.com.ar
 License: GPL3
@@ -16,7 +16,7 @@ function getDcFontAwesomeStyles()
             wp_enqueue_style('font-awesome', plugin_dir_url(__FILE__) . 'css/font-awesome.min.css', false, getDcFontawesomeVersion());
             break;
         case 'remote':
-            wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', false, getDcFontawesomeVersion());
+            wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', false, getDcFontawesomeVersion());
             break;
     }
 }
